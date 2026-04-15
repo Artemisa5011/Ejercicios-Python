@@ -4,7 +4,7 @@
   "metadata": {
     "colab": {
       "provenance": [],
-      "authorship_tag": "ABX9TyOCjut4/bRKRfFUsSZPEVOP",
+      "authorship_tag": "ABX9TyMxZdm4FhAFRiE1i40auy52",
       "include_colab_link": true
     },
     "kernelspec": {
@@ -1458,6 +1458,193 @@
             "ROJO        11\n",
             "AMARILLO     3\n",
             "Name: count, dtype: int64\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "29e992b5",
+        "outputId": "39159cae-ac5e-40c9-a19f-1ca8ed9b292b"
+      },
+      "source": [
+        "import os\n",
+        "import pandas as pd\n",
+        "from datetime import datetime\n",
+        "\n",
+        "# Define output directory and ensure it exists\n",
+        "BASE_OUTPUT = \"/content/output\"\n",
+        "os.makedirs(BASE_OUTPUT, exist_ok=True)\n",
+        "\n",
+        "# Filter for RELANZAR == 'SI'\n",
+        "relanzar_si = homologado[homologado[\"RELANZAR\"] == \"SI\"]\n",
+        "\n",
+        "# Save 'SI' file\n",
+        "fecha_actual = datetime.now().strftime(\"%Y%m%d\")\n",
+        "ruta_salida_si = os.path.join(BASE_OUTPUT, f\"HOMOLOGADO_RELANZAR_SI_{fecha_actual}.xlsx\")\n",
+        "relanzar_si.to_excel(ruta_salida_si, index=False)\n",
+        "\n",
+        "print(f\"✅ Archivo 'RELANZAR = SI' generado: {ruta_salida_si}\")\n",
+        "print(\"Detalle 'RELANZAR = SI':\")\n",
+        "print(relanzar_si[\"RELANZAR\"].value_counts())"
+      ],
+      "execution_count": 73,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "✅ Archivo 'RELANZAR = SI' generado: /content/output/HOMOLOGADO_RELANZAR_SI_20260415.xlsx\n",
+            "Detalle 'RELANZAR = SI':\n",
+            "RELANZAR\n",
+            "SI    288\n",
+            "Name: count, dtype: int64\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "218cc13c",
+        "outputId": "a4deca24-c789-4bc1-9525-e86e7aac3641"
+      },
+      "source": [
+        "# Filter for RELANZAR == 'NO'\n",
+        "relanzar_no = homologado[homologado[\"RELANZAR\"] == \"NO\"]\n",
+        "\n",
+        "# Save 'NO' file\n",
+        "fecha_actual = datetime.now().strftime(\"%Y%m%d\")\n",
+        "ruta_salida_no = os.path.join(BASE_OUTPUT, f\"HOMOLOGADO_RELANZAR_NO_{fecha_actual}.xlsx\")\n",
+        "relanzar_no.to_excel(ruta_salida_no, index=False)\n",
+        "\n",
+        "print(f\"✅ Archivo 'RELANZAR = NO' generado: {ruta_salida_no}\")\n",
+        "print(\"Detalle 'RELANZAR = NO':\")\n",
+        "print(relanzar_no[\"RELANZAR\"].value_counts())"
+      ],
+      "execution_count": 74,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "✅ Archivo 'RELANZAR = NO' generado: /content/output/HOMOLOGADO_RELANZAR_NO_20260415.xlsx\n",
+            "Detalle 'RELANZAR = NO':\n",
+            "RELANZAR\n",
+            "NO    247\n",
+            "Name: count, dtype: int64\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "71c4ec27"
+      },
+      "source": [
+        "You can find both generated files (`HOMOLOGADO_RELANZAR_SI_YYYYMMDD.xlsx` and `HOMOLOGADO_RELANZAR_NO_YYYYMMDD.xlsx`) in the `/content/output` directory."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "de98a262"
+      },
+      "source": [
+        "### Envío de correo electrónico automático para el archivo RELANZAR NO\n",
+        "\n",
+        "Este código busca el último archivo `HOMOLOGADO_RELANZAR_NO_YYYYMMDD.xlsx` y lo envía por correo electrónico. **Asegúrate de configurar tus credenciales de correo electrónico en los secretos de Colab** (ver pasos anteriores)."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 506
+        },
+        "id": "fb0888a6",
+        "outputId": "8d589a9b-be89-4db4-edd5-ac6d26f450c6"
+      },
+      "source": [
+        "import smtplib\n",
+        "from email.mime.multipart import MIMEMultipart\n",
+        "from email.mime.text import MIMEText\n",
+        "from email.mime.application import MIMEApplication\n",
+        "import os\n",
+        "import glob\n",
+        "from google.colab import userdata\n",
+        "\n",
+        "# --- Configuración del Correo Electrónico (¡Usar Secretos de Colab!) ---\n",
+        "# Accede a tus secretos guardados\n",
+        "SENDER_EMAIL = userdata.get('SENDER_EMAIL')  # Tu dirección de correo\n",
+        "SENDER_PASSWORD = userdata.get('SENDER_PASSWORD') # Tu contraseña o contraseña de aplicación\n",
+        "RECEIVER_EMAIL = 'recipient@example.com' # Cambia esto por la dirección del destinatario\n",
+        "\n",
+        "# Configuración del servidor SMTP para Gmail (ejemplo)\n",
+        "SMTP_SERVER = 'smtp.gmail.com'\n",
+        "SMTP_PORT = 587\n",
+        "\n",
+        "# --- Buscar el último archivo 'RELANZAR NO' ---\n",
+        "output_dir = '/content/output'\n",
+        "list_of_files = glob.glob(os.path.join(output_dir, 'HOMOLOGADO_RELANZAR_NO_*.xlsx'))\n",
+        "\n",
+        "if not list_of_files:\n",
+        "    print(f\"❌ No se encontró ningún archivo 'HOMOLOGADO_RELANZAR_NO_*.xlsx' en {output_dir}\")\n",
+        "else:\n",
+        "    latest_file = max(list_of_files, key=os.path.getctime)\n",
+        "    print(f\"✅ Último archivo 'RELANZAR NO' encontrado: {latest_file}\")\n",
+        "\n",
+        "    # --- Crear el mensaje de correo ---\n",
+        "    msg = MIMEMultipart()\n",
+        "    msg['From'] = SENDER_EMAIL\n",
+        "    msg['To'] = RECEIVER_EMAIL\n",
+        "    msg['Subject'] = f\"Reporte Homologado RELANZAR NO - {os.path.basename(latest_file)}\"\n",
+        "\n",
+        "    body = \"Adjunto encontrarás el reporte de pedidos con estado 'RELANZAR NO'.\"\n",
+        "    msg.attach(MIMEText(body, 'plain'))\n",
+        "\n",
+        "    # --- Adjuntar el archivo ----\n",
+        "    with open(latest_file, \"rb\") as fil:\n",
+        "        part = MIMEApplication(\n",
+        "            fil.read(),\n",
+        "            Name=os.path.basename(latest_file)\n",
+        "        )\n",
+        "    part['Content-Disposition'] = f'attachment; filename=\"{os.path.basename(latest_file)}\"'\n",
+        "    msg.attach(part)\n",
+        "\n",
+        "    # --- Enviar el correo ---\n",
+        "    try:\n",
+        "        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)\n",
+        "        server.starttls() # Habilitar seguridad TLS\n",
+        "        server.login(SENDER_EMAIL, SENDER_PASSWORD)\n",
+        "        server.send_message(msg)\n",
+        "        server.quit()\n",
+        "        print(f\"📧 Correo enviado con éxito a {RECEIVER_EMAIL} con el archivo {os.path.basename(latest_file)}\")\n",
+        "    except Exception as e:\n",
+        "        print(f\"❌ Error al enviar el correo: {e}\")\n",
+        "        print(\"Asegúrate de que 'SENDER_EMAIL' y 'SENDER_PASSWORD' estén configurados correctamente en los secretos de Colab y que tu configuración de correo permite aplicaciones de terceros o tiene una contraseña de aplicación generada (especialmente para Gmail).\")\n"
+      ],
+      "execution_count": 75,
+      "outputs": [
+        {
+          "output_type": "error",
+          "ename": "SecretNotFoundError",
+          "evalue": "Secret SENDER_EMAIL does not exist.",
+          "traceback": [
+            "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+            "\u001b[0;31mSecretNotFoundError\u001b[0m                       Traceback (most recent call last)",
+            "\u001b[0;32m/tmp/ipykernel_17422/1969490739.py\u001b[0m in \u001b[0;36m<cell line: 0>\u001b[0;34m()\u001b[0m\n\u001b[1;32m      9\u001b[0m \u001b[0;31m# --- Configuración del Correo Electrónico (¡Usar Secretos de Colab!) ---\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     10\u001b[0m \u001b[0;31m# Accede a tus secretos guardados\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 11\u001b[0;31m \u001b[0mSENDER_EMAIL\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0muserdata\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mget\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'SENDER_EMAIL'\u001b[0m\u001b[0;34m)\u001b[0m  \u001b[0;31m# Tu dirección de correo\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     12\u001b[0m \u001b[0mSENDER_PASSWORD\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0muserdata\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mget\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'SENDER_PASSWORD'\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;31m# Tu contraseña o contraseña de aplicación\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     13\u001b[0m \u001b[0mRECEIVER_EMAIL\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m'recipient@example.com'\u001b[0m \u001b[0;31m# Cambia esto por la dirección del destinatario\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/google/colab/userdata.py\u001b[0m in \u001b[0;36mget\u001b[0;34m(key)\u001b[0m\n\u001b[1;32m     66\u001b[0m     \u001b[0;32mraise\u001b[0m \u001b[0mTimeoutException\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mkey\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     67\u001b[0m   \u001b[0;32mif\u001b[0m \u001b[0;32mnot\u001b[0m \u001b[0mresp\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mget\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'exists'\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;32mFalse\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 68\u001b[0;31m     \u001b[0;32mraise\u001b[0m \u001b[0mSecretNotFoundError\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mkey\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     69\u001b[0m   \u001b[0;32mif\u001b[0m \u001b[0;32mnot\u001b[0m \u001b[0mresp\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mget\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'access'\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;32mFalse\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     70\u001b[0m     \u001b[0;32mraise\u001b[0m \u001b[0mNotebookAccessError\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mkey\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;31mSecretNotFoundError\u001b[0m: Secret SENDER_EMAIL does not exist."
           ]
         }
       ]
