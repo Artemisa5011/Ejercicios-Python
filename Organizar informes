@@ -1,0 +1,1504 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyOCjut4/bRKRfFUsSZPEVOP",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/Artemisa5011/Ejercicios-Python/blob/main/Organizar%20informes\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Dependencias"
+      ],
+      "metadata": {
+        "id": "qOZGgv9yzbvE"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "!pip install dash plotly"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "5P_qo3eyzdvI",
+        "outputId": "209f8103-8441-4102-ae3d-11536197c35b"
+      },
+      "execution_count": 26,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Requirement already satisfied: dash in /usr/local/lib/python3.12/dist-packages (4.1.0)\n",
+            "Requirement already satisfied: plotly in /usr/local/lib/python3.12/dist-packages (5.24.1)\n",
+            "Requirement already satisfied: Flask<3.2,>=1.0.4 in /usr/local/lib/python3.12/dist-packages (from dash) (3.1.3)\n",
+            "Requirement already satisfied: Werkzeug<3.2 in /usr/local/lib/python3.12/dist-packages (from dash) (3.1.8)\n",
+            "Requirement already satisfied: importlib-metadata in /usr/local/lib/python3.12/dist-packages (from dash) (8.7.1)\n",
+            "Requirement already satisfied: typing_extensions>=4.1.1 in /usr/local/lib/python3.12/dist-packages (from dash) (4.15.0)\n",
+            "Requirement already satisfied: requests in /usr/local/lib/python3.12/dist-packages (from dash) (2.32.4)\n",
+            "Requirement already satisfied: retrying in /usr/local/lib/python3.12/dist-packages (from dash) (1.4.2)\n",
+            "Requirement already satisfied: nest-asyncio in /usr/local/lib/python3.12/dist-packages (from dash) (1.6.0)\n",
+            "Requirement already satisfied: setuptools in /usr/local/lib/python3.12/dist-packages (from dash) (75.2.0)\n",
+            "Requirement already satisfied: tenacity>=6.2.0 in /usr/local/lib/python3.12/dist-packages (from plotly) (9.1.4)\n",
+            "Requirement already satisfied: packaging in /usr/local/lib/python3.12/dist-packages (from plotly) (26.0)\n",
+            "Requirement already satisfied: blinker>=1.9.0 in /usr/local/lib/python3.12/dist-packages (from Flask<3.2,>=1.0.4->dash) (1.9.0)\n",
+            "Requirement already satisfied: click>=8.1.3 in /usr/local/lib/python3.12/dist-packages (from Flask<3.2,>=1.0.4->dash) (8.3.2)\n",
+            "Requirement already satisfied: itsdangerous>=2.2.0 in /usr/local/lib/python3.12/dist-packages (from Flask<3.2,>=1.0.4->dash) (2.2.0)\n",
+            "Requirement already satisfied: jinja2>=3.1.2 in /usr/local/lib/python3.12/dist-packages (from Flask<3.2,>=1.0.4->dash) (3.1.6)\n",
+            "Requirement already satisfied: markupsafe>=2.1.1 in /usr/local/lib/python3.12/dist-packages (from Flask<3.2,>=1.0.4->dash) (3.0.3)\n",
+            "Requirement already satisfied: zipp>=3.20 in /usr/local/lib/python3.12/dist-packages (from importlib-metadata->dash) (3.23.0)\n",
+            "Requirement already satisfied: charset_normalizer<4,>=2 in /usr/local/lib/python3.12/dist-packages (from requests->dash) (3.4.7)\n",
+            "Requirement already satisfied: idna<4,>=2.5 in /usr/local/lib/python3.12/dist-packages (from requests->dash) (3.11)\n",
+            "Requirement already satisfied: urllib3<3,>=1.21.1 in /usr/local/lib/python3.12/dist-packages (from requests->dash) (2.5.0)\n",
+            "Requirement already satisfied: certifi>=2017.4.17 in /usr/local/lib/python3.12/dist-packages (from requests->dash) (2026.2.25)\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Instalar versiones compatibles"
+      ],
+      "metadata": {
+        "id": "in-grO4q22wI"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "!pip install dash==2.15.0 jupyter-dash==0.4.2 plotly"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 1000
+        },
+        "id": "8WqNAs6Z239X",
+        "outputId": "c016d2d2-663d-432c-eb49-1112bb259ee1"
+      },
+      "execution_count": 37,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Collecting dash==2.15.0\n",
+            "  Downloading dash-2.15.0-py3-none-any.whl.metadata (11 kB)\n",
+            "Collecting jupyter-dash==0.4.2\n",
+            "  Downloading jupyter_dash-0.4.2-py3-none-any.whl.metadata (3.6 kB)\n",
+            "Requirement already satisfied: plotly in /usr/local/lib/python3.12/dist-packages (5.24.1)\n",
+            "Collecting Flask<3.1,>=1.0.4 (from dash==2.15.0)\n",
+            "  Downloading flask-3.0.3-py3-none-any.whl.metadata (3.2 kB)\n",
+            "Collecting Werkzeug<3.1 (from dash==2.15.0)\n",
+            "  Downloading werkzeug-3.0.6-py3-none-any.whl.metadata (3.7 kB)\n",
+            "Collecting dash-html-components==2.0.0 (from dash==2.15.0)\n",
+            "  Downloading dash_html_components-2.0.0-py3-none-any.whl.metadata (3.8 kB)\n",
+            "Collecting dash-core-components==2.0.0 (from dash==2.15.0)\n",
+            "  Downloading dash_core_components-2.0.0-py3-none-any.whl.metadata (2.9 kB)\n",
+            "Collecting dash-table==5.0.0 (from dash==2.15.0)\n",
+            "  Downloading dash_table-5.0.0-py3-none-any.whl.metadata (2.4 kB)\n",
+            "Requirement already satisfied: typing-extensions>=4.1.1 in /usr/local/lib/python3.12/dist-packages (from dash==2.15.0) (4.15.0)\n",
+            "Requirement already satisfied: requests in /usr/local/lib/python3.12/dist-packages (from dash==2.15.0) (2.32.4)\n",
+            "Requirement already satisfied: retrying in /usr/local/lib/python3.12/dist-packages (from dash==2.15.0) (1.4.2)\n",
+            "Requirement already satisfied: nest-asyncio in /usr/local/lib/python3.12/dist-packages (from dash==2.15.0) (1.6.0)\n",
+            "Requirement already satisfied: setuptools in /usr/local/lib/python3.12/dist-packages (from dash==2.15.0) (75.2.0)\n",
+            "Requirement already satisfied: importlib-metadata in /usr/local/lib/python3.12/dist-packages (from dash==2.15.0) (8.7.1)\n",
+            "Requirement already satisfied: ipython in /usr/local/lib/python3.12/dist-packages (from jupyter-dash==0.4.2) (7.34.0)\n",
+            "Requirement already satisfied: ipykernel in /usr/local/lib/python3.12/dist-packages (from jupyter-dash==0.4.2) (6.17.1)\n",
+            "Collecting ansi2html (from jupyter-dash==0.4.2)\n",
+            "  Downloading ansi2html-1.9.2-py3-none-any.whl.metadata (3.7 kB)\n",
+            "Requirement already satisfied: tenacity>=6.2.0 in /usr/local/lib/python3.12/dist-packages (from plotly) (9.1.4)\n",
+            "Requirement already satisfied: packaging in /usr/local/lib/python3.12/dist-packages (from plotly) (26.0)\n",
+            "Requirement already satisfied: Jinja2>=3.1.2 in /usr/local/lib/python3.12/dist-packages (from Flask<3.1,>=1.0.4->dash==2.15.0) (3.1.6)\n",
+            "Requirement already satisfied: itsdangerous>=2.1.2 in /usr/local/lib/python3.12/dist-packages (from Flask<3.1,>=1.0.4->dash==2.15.0) (2.2.0)\n",
+            "Requirement already satisfied: click>=8.1.3 in /usr/local/lib/python3.12/dist-packages (from Flask<3.1,>=1.0.4->dash==2.15.0) (8.3.2)\n",
+            "Requirement already satisfied: blinker>=1.6.2 in /usr/local/lib/python3.12/dist-packages (from Flask<3.1,>=1.0.4->dash==2.15.0) (1.9.0)\n",
+            "Requirement already satisfied: MarkupSafe>=2.1.1 in /usr/local/lib/python3.12/dist-packages (from Werkzeug<3.1->dash==2.15.0) (3.0.3)\n",
+            "Requirement already satisfied: zipp>=3.20 in /usr/local/lib/python3.12/dist-packages (from importlib-metadata->dash==2.15.0) (3.23.0)\n",
+            "Requirement already satisfied: debugpy>=1.0 in /usr/local/lib/python3.12/dist-packages (from ipykernel->jupyter-dash==0.4.2) (1.8.15)\n",
+            "Requirement already satisfied: jupyter-client>=6.1.12 in /usr/local/lib/python3.12/dist-packages (from ipykernel->jupyter-dash==0.4.2) (7.4.9)\n",
+            "Requirement already satisfied: matplotlib-inline>=0.1 in /usr/local/lib/python3.12/dist-packages (from ipykernel->jupyter-dash==0.4.2) (0.2.1)\n",
+            "Requirement already satisfied: psutil in /usr/local/lib/python3.12/dist-packages (from ipykernel->jupyter-dash==0.4.2) (5.9.5)\n",
+            "Requirement already satisfied: pyzmq>=17 in /usr/local/lib/python3.12/dist-packages (from ipykernel->jupyter-dash==0.4.2) (26.2.1)\n",
+            "Requirement already satisfied: tornado>=6.1 in /usr/local/lib/python3.12/dist-packages (from ipykernel->jupyter-dash==0.4.2) (6.5.1)\n",
+            "Requirement already satisfied: traitlets>=5.1.0 in /usr/local/lib/python3.12/dist-packages (from ipykernel->jupyter-dash==0.4.2) (5.7.1)\n",
+            "Collecting jedi>=0.16 (from ipython->jupyter-dash==0.4.2)\n",
+            "  Downloading jedi-0.19.2-py2.py3-none-any.whl.metadata (22 kB)\n",
+            "Requirement already satisfied: decorator in /usr/local/lib/python3.12/dist-packages (from ipython->jupyter-dash==0.4.2) (4.4.2)\n",
+            "Requirement already satisfied: pickleshare in /usr/local/lib/python3.12/dist-packages (from ipython->jupyter-dash==0.4.2) (0.7.5)\n",
+            "Requirement already satisfied: prompt-toolkit!=3.0.0,!=3.0.1,<3.1.0,>=2.0.0 in /usr/local/lib/python3.12/dist-packages (from ipython->jupyter-dash==0.4.2) (3.0.52)\n",
+            "Requirement already satisfied: pygments in /usr/local/lib/python3.12/dist-packages (from ipython->jupyter-dash==0.4.2) (2.20.0)\n",
+            "Requirement already satisfied: backcall in /usr/local/lib/python3.12/dist-packages (from ipython->jupyter-dash==0.4.2) (0.2.0)\n",
+            "Requirement already satisfied: pexpect>4.3 in /usr/local/lib/python3.12/dist-packages (from ipython->jupyter-dash==0.4.2) (4.9.0)\n",
+            "Requirement already satisfied: charset_normalizer<4,>=2 in /usr/local/lib/python3.12/dist-packages (from requests->dash==2.15.0) (3.4.7)\n",
+            "Requirement already satisfied: idna<4,>=2.5 in /usr/local/lib/python3.12/dist-packages (from requests->dash==2.15.0) (3.11)\n",
+            "Requirement already satisfied: urllib3<3,>=1.21.1 in /usr/local/lib/python3.12/dist-packages (from requests->dash==2.15.0) (2.5.0)\n",
+            "Requirement already satisfied: certifi>=2017.4.17 in /usr/local/lib/python3.12/dist-packages (from requests->dash==2.15.0) (2026.2.25)\n",
+            "Requirement already satisfied: parso<0.9.0,>=0.8.4 in /usr/local/lib/python3.12/dist-packages (from jedi>=0.16->ipython->jupyter-dash==0.4.2) (0.8.6)\n",
+            "Requirement already satisfied: entrypoints in /usr/local/lib/python3.12/dist-packages (from jupyter-client>=6.1.12->ipykernel->jupyter-dash==0.4.2) (0.4)\n",
+            "Requirement already satisfied: jupyter-core>=4.9.2 in /usr/local/lib/python3.12/dist-packages (from jupyter-client>=6.1.12->ipykernel->jupyter-dash==0.4.2) (5.9.1)\n",
+            "Requirement already satisfied: python-dateutil>=2.8.2 in /usr/local/lib/python3.12/dist-packages (from jupyter-client>=6.1.12->ipykernel->jupyter-dash==0.4.2) (2.9.0.post0)\n",
+            "Requirement already satisfied: ptyprocess>=0.5 in /usr/local/lib/python3.12/dist-packages (from pexpect>4.3->ipython->jupyter-dash==0.4.2) (0.7.0)\n",
+            "Requirement already satisfied: wcwidth in /usr/local/lib/python3.12/dist-packages (from prompt-toolkit!=3.0.0,!=3.0.1,<3.1.0,>=2.0.0->ipython->jupyter-dash==0.4.2) (0.6.0)\n",
+            "Requirement already satisfied: platformdirs>=2.5 in /usr/local/lib/python3.12/dist-packages (from jupyter-core>=4.9.2->jupyter-client>=6.1.12->ipykernel->jupyter-dash==0.4.2) (4.9.6)\n",
+            "Requirement already satisfied: six>=1.5 in /usr/local/lib/python3.12/dist-packages (from python-dateutil>=2.8.2->jupyter-client>=6.1.12->ipykernel->jupyter-dash==0.4.2) (1.17.0)\n",
+            "Downloading dash-2.15.0-py3-none-any.whl (10.2 MB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m10.2/10.2 MB\u001b[0m \u001b[31m60.4 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25hDownloading jupyter_dash-0.4.2-py3-none-any.whl (23 kB)\n",
+            "Downloading dash_core_components-2.0.0-py3-none-any.whl (3.8 kB)\n",
+            "Downloading dash_html_components-2.0.0-py3-none-any.whl (4.1 kB)\n",
+            "Downloading dash_table-5.0.0-py3-none-any.whl (3.9 kB)\n",
+            "Downloading flask-3.0.3-py3-none-any.whl (101 kB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m101.7/101.7 kB\u001b[0m \u001b[31m8.3 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25hDownloading werkzeug-3.0.6-py3-none-any.whl (227 kB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m228.0/228.0 kB\u001b[0m \u001b[31m14.8 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25hDownloading ansi2html-1.9.2-py3-none-any.whl (17 kB)\n",
+            "Downloading jedi-0.19.2-py2.py3-none-any.whl (1.6 MB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m1.6/1.6 MB\u001b[0m \u001b[31m47.8 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25hInstalling collected packages: dash-table, dash-html-components, dash-core-components, Werkzeug, jedi, ansi2html, Flask, dash, jupyter-dash\n",
+            "  Attempting uninstall: Werkzeug\n",
+            "    Found existing installation: Werkzeug 3.1.8\n",
+            "    Uninstalling Werkzeug-3.1.8:\n",
+            "      Successfully uninstalled Werkzeug-3.1.8\n",
+            "  Attempting uninstall: Flask\n",
+            "    Found existing installation: Flask 3.1.3\n",
+            "    Uninstalling Flask-3.1.3:\n",
+            "      Successfully uninstalled Flask-3.1.3\n",
+            "  Attempting uninstall: dash\n",
+            "    Found existing installation: dash 4.1.0\n",
+            "    Uninstalling dash-4.1.0:\n",
+            "      Successfully uninstalled dash-4.1.0\n",
+            "Successfully installed Flask-3.0.3 Werkzeug-3.0.6 ansi2html-1.9.2 dash-2.15.0 dash-core-components-2.0.0 dash-html-components-2.0.0 dash-table-5.0.0 jedi-0.19.2 jupyter-dash-0.4.2\n"
+          ]
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "application/vnd.colab-display-data+json": {
+              "pip_warning": {
+                "packages": [
+                  "dash",
+                  "flask",
+                  "werkzeug"
+                ]
+              },
+              "id": "b651b7cfa9a441a098389d8510af5827"
+            }
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Cargar archivos en Google Colab"
+      ],
+      "metadata": {
+        "id": "MdGvqzdmzk0f"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from google.colab import files\n",
+        "import os\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Subir archivos\n",
+        "uploaded = files.upload()\n",
+        "\n",
+        "print(\"Archivos cargados:\", list(uploaded.keys()))"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 55
+        },
+        "id": "2Wd167VrzliT",
+        "outputId": "f43eb403-48fd-4717-f64d-637d0aafce32"
+      },
+      "execution_count": 36,
+      "outputs": [
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "<IPython.core.display.HTML object>"
+            ],
+            "text/html": [
+              "\n",
+              "     <input type=\"file\" id=\"files-b7f34f98-df48-472e-8c6a-b659ead8a355\" name=\"files[]\" multiple disabled\n",
+              "        style=\"border:none\" />\n",
+              "     <output id=\"result-b7f34f98-df48-472e-8c6a-b659ead8a355\">\n",
+              "      Upload widget is only available when the cell has been executed in the\n",
+              "      current browser session. Please rerun this cell to enable.\n",
+              "      </output>\n",
+              "      <script>// Copyright 2017 Google LLC\n",
+              "//\n",
+              "// Licensed under the Apache License, Version 2.0 (the \"License\");\n",
+              "// you may not use this file except in compliance with the License.\n",
+              "// You may obtain a copy of the License at\n",
+              "//\n",
+              "//      http://www.apache.org/licenses/LICENSE-2.0\n",
+              "//\n",
+              "// Unless required by applicable law or agreed to in writing, software\n",
+              "// distributed under the License is distributed on an \"AS IS\" BASIS,\n",
+              "// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n",
+              "// See the License for the specific language governing permissions and\n",
+              "// limitations under the License.\n",
+              "\n",
+              "/**\n",
+              " * @fileoverview Helpers for google.colab Python module.\n",
+              " */\n",
+              "(function(scope) {\n",
+              "function span(text, styleAttributes = {}) {\n",
+              "  const element = document.createElement('span');\n",
+              "  element.textContent = text;\n",
+              "  for (const key of Object.keys(styleAttributes)) {\n",
+              "    element.style[key] = styleAttributes[key];\n",
+              "  }\n",
+              "  return element;\n",
+              "}\n",
+              "\n",
+              "// Max number of bytes which will be uploaded at a time.\n",
+              "const MAX_PAYLOAD_SIZE = 100 * 1024;\n",
+              "\n",
+              "function _uploadFiles(inputId, outputId) {\n",
+              "  const steps = uploadFilesStep(inputId, outputId);\n",
+              "  const outputElement = document.getElementById(outputId);\n",
+              "  // Cache steps on the outputElement to make it available for the next call\n",
+              "  // to uploadFilesContinue from Python.\n",
+              "  outputElement.steps = steps;\n",
+              "\n",
+              "  return _uploadFilesContinue(outputId);\n",
+              "}\n",
+              "\n",
+              "// This is roughly an async generator (not supported in the browser yet),\n",
+              "// where there are multiple asynchronous steps and the Python side is going\n",
+              "// to poll for completion of each step.\n",
+              "// This uses a Promise to block the python side on completion of each step,\n",
+              "// then passes the result of the previous step as the input to the next step.\n",
+              "function _uploadFilesContinue(outputId) {\n",
+              "  const outputElement = document.getElementById(outputId);\n",
+              "  const steps = outputElement.steps;\n",
+              "\n",
+              "  const next = steps.next(outputElement.lastPromiseValue);\n",
+              "  return Promise.resolve(next.value.promise).then((value) => {\n",
+              "    // Cache the last promise value to make it available to the next\n",
+              "    // step of the generator.\n",
+              "    outputElement.lastPromiseValue = value;\n",
+              "    return next.value.response;\n",
+              "  });\n",
+              "}\n",
+              "\n",
+              "/**\n",
+              " * Generator function which is called between each async step of the upload\n",
+              " * process.\n",
+              " * @param {string} inputId Element ID of the input file picker element.\n",
+              " * @param {string} outputId Element ID of the output display.\n",
+              " * @return {!Iterable<!Object>} Iterable of next steps.\n",
+              " */\n",
+              "function* uploadFilesStep(inputId, outputId) {\n",
+              "  const inputElement = document.getElementById(inputId);\n",
+              "  inputElement.disabled = false;\n",
+              "\n",
+              "  const outputElement = document.getElementById(outputId);\n",
+              "  outputElement.innerHTML = '';\n",
+              "\n",
+              "  const pickedPromise = new Promise((resolve) => {\n",
+              "    inputElement.addEventListener('change', (e) => {\n",
+              "      resolve(e.target.files);\n",
+              "    });\n",
+              "  });\n",
+              "\n",
+              "  const cancel = document.createElement('button');\n",
+              "  inputElement.parentElement.appendChild(cancel);\n",
+              "  cancel.textContent = 'Cancel upload';\n",
+              "  const cancelPromise = new Promise((resolve) => {\n",
+              "    cancel.onclick = () => {\n",
+              "      resolve(null);\n",
+              "    };\n",
+              "  });\n",
+              "\n",
+              "  // Wait for the user to pick the files.\n",
+              "  const files = yield {\n",
+              "    promise: Promise.race([pickedPromise, cancelPromise]),\n",
+              "    response: {\n",
+              "      action: 'starting',\n",
+              "    }\n",
+              "  };\n",
+              "\n",
+              "  cancel.remove();\n",
+              "\n",
+              "  // Disable the input element since further picks are not allowed.\n",
+              "  inputElement.disabled = true;\n",
+              "\n",
+              "  if (!files) {\n",
+              "    return {\n",
+              "      response: {\n",
+              "        action: 'complete',\n",
+              "      }\n",
+              "    };\n",
+              "  }\n",
+              "\n",
+              "  for (const file of files) {\n",
+              "    const li = document.createElement('li');\n",
+              "    li.append(span(file.name, {fontWeight: 'bold'}));\n",
+              "    li.append(span(\n",
+              "        `(${file.type || 'n/a'}) - ${file.size} bytes, ` +\n",
+              "        `last modified: ${\n",
+              "            file.lastModifiedDate ? file.lastModifiedDate.toLocaleDateString() :\n",
+              "                                    'n/a'} - `));\n",
+              "    const percent = span('0% done');\n",
+              "    li.appendChild(percent);\n",
+              "\n",
+              "    outputElement.appendChild(li);\n",
+              "\n",
+              "    const fileDataPromise = new Promise((resolve) => {\n",
+              "      const reader = new FileReader();\n",
+              "      reader.onload = (e) => {\n",
+              "        resolve(e.target.result);\n",
+              "      };\n",
+              "      reader.readAsArrayBuffer(file);\n",
+              "    });\n",
+              "    // Wait for the data to be ready.\n",
+              "    let fileData = yield {\n",
+              "      promise: fileDataPromise,\n",
+              "      response: {\n",
+              "        action: 'continue',\n",
+              "      }\n",
+              "    };\n",
+              "\n",
+              "    // Use a chunked sending to avoid message size limits. See b/62115660.\n",
+              "    let position = 0;\n",
+              "    do {\n",
+              "      const length = Math.min(fileData.byteLength - position, MAX_PAYLOAD_SIZE);\n",
+              "      const chunk = new Uint8Array(fileData, position, length);\n",
+              "      position += length;\n",
+              "\n",
+              "      const base64 = btoa(String.fromCharCode.apply(null, chunk));\n",
+              "      yield {\n",
+              "        response: {\n",
+              "          action: 'append',\n",
+              "          file: file.name,\n",
+              "          data: base64,\n",
+              "        },\n",
+              "      };\n",
+              "\n",
+              "      let percentDone = fileData.byteLength === 0 ?\n",
+              "          100 :\n",
+              "          Math.round((position / fileData.byteLength) * 100);\n",
+              "      percent.textContent = `${percentDone}% done`;\n",
+              "\n",
+              "    } while (position < fileData.byteLength);\n",
+              "  }\n",
+              "\n",
+              "  // All done.\n",
+              "  yield {\n",
+              "    response: {\n",
+              "      action: 'complete',\n",
+              "    }\n",
+              "  };\n",
+              "}\n",
+              "\n",
+              "scope.google = scope.google || {};\n",
+              "scope.google.colab = scope.google.colab || {};\n",
+              "scope.google.colab._files = {\n",
+              "  _uploadFiles,\n",
+              "  _uploadFilesContinue,\n",
+              "};\n",
+              "})(self);\n",
+              "</script> "
+            ]
+          },
+          "metadata": {}
+        },
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Archivos cargados: []\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Crear el archivo HOMOLOGADO"
+      ],
+      "metadata": {
+        "id": "k2t5oAJOzrAW"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "import numpy as np\n",
+        "from datetime import datetime\n",
+        "\n",
+        "# Rutas\n",
+        "RUTA_BASE = \"/content\"\n",
+        "ARCH_ACT = os.path.join(RUTA_BASE, \"ACTIVADOR.xlsx\")\n",
+        "ARCH_SUS = os.path.join(RUTA_BASE, \"SUSPECORE.xlsx\")\n",
+        "\n",
+        "# Cargar archivos\n",
+        "act = pd.read_excel(ARCH_ACT)\n",
+        "sus = pd.read_excel(ARCH_SUS)\n",
+        "\n",
+        "# -----------------------------\n",
+        "# NORMALIZAR ACTIVADOR\n",
+        "# -----------------------------\n",
+        "act_hom = act.copy()\n",
+        "act_hom[\"ORIGEN\"] = \"ACTIVADOR\"\n",
+        "act_hom[\"RELANZAR\"] = act_hom[\"CODIGO_ERROR\"].isin([\"soap:Server\", \"APR-100\"])\n",
+        "\n",
+        "# -----------------------------\n",
+        "# NORMALIZAR SUSPECORE\n",
+        "# -----------------------------\n",
+        "sus_hom = sus.copy()\n",
+        "sus_hom[\"ORIGEN\"] = \"SUSPECORE\"\n",
+        "\n",
+        "sus_hom[\"CODIGO_ERROR\"] = sus_hom[\"CODIGOEXCEPCIONACT\"]\n",
+        "sus_hom[\"VALOR_ERROR\"] = sus_hom[\"DESCRIPCIONEXCEPCIONACT\"]\n",
+        "sus_hom[\"MOTIVO_ERROR\"] = sus_hom[\"MOTIVOEXCEPCIONACT\"]\n",
+        "\n",
+        "# TAREA_EXCEPCION → TIPO_COMUNICACION\n",
+        "sus_hom[\"TIPO_COMUNICACION\"] = sus_hom[\"TAREA_EXCEPCION\"]\n",
+        "\n",
+        "# Corregir NOMBRE_CUIDAD\n",
+        "sus_hom[\"NOMBRE_CIUDAD\"] = sus_hom[\"NOMBRE_CUIDAD\"]\n",
+        "\n",
+        "# Regla RELANZAR SUSPECORE\n",
+        "sus_hom[\"RELANZAR\"] = sus_hom[\"MOTIVOEXCEPCIONACT\"].str.contains(\n",
+        "    \"tcp://127.0.0.1:61616|java.io.EOFException|Remote operation time out\",\n",
+        "    case=False,\n",
+        "    na=False\n",
+        ")\n",
+        "\n",
+        "# -----------------------------\n",
+        "# COLUMNAS FINALES\n",
+        "# -----------------------------\n",
+        "COLUMNAS_HOMOLOGADO = [\n",
+        "    \"ORDER_SEQ_ID\",\n",
+        "    \"PEDIDO\",\n",
+        "    \"PRODUCTO\",\n",
+        "    \"IDSERVICIORAIZ\",\n",
+        "    \"TRANSACCION\",\n",
+        "    \"TIPO_COMUNICACION\",\n",
+        "    \"FECHA_CREACION\",\n",
+        "    \"FECHA_EXCEPCION\",\n",
+        "    \"CODIGO_UNICO_DIRECCION\",\n",
+        "    \"NOMBRE_CIUDAD\",\n",
+        "    \"TAREA_EXCEPCION\",\n",
+        "    \"CODIGO_ERROR\",\n",
+        "    \"VALOR_ERROR\",\n",
+        "    \"MOTIVO_ERROR\",\n",
+        "    \"FECHA_CARGA\",\n",
+        "    \"ORIGEN\",\n",
+        "    \"RELANZAR\"\n",
+        "]\n",
+        "\n",
+        "# Asegurar columnas\n",
+        "for col in COLUMNAS_HOMOLOGADO:\n",
+        "    if col not in act_hom.columns:\n",
+        "        act_hom[col] = np.nan\n",
+        "    if col not in sus_hom.columns:\n",
+        "        sus_hom[col] = np.nan\n",
+        "\n",
+        "# Unificar\n",
+        "homologado = pd.concat(\n",
+        "    [act_hom[COLUMNAS_HOMOLOGADO], sus_hom[COLUMNAS_HOMOLOGADO]],\n",
+        "    ignore_index=True\n",
+        ")\n",
+        "\n",
+        "homologado[\"RELANZAR\"] = homologado[\"RELANZAR\"].map({True: \"SI\", False: \"NO\"})"
+      ],
+      "metadata": {
+        "id": "A081wO6szrvE"
+      },
+      "execution_count": 37,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Enriquecimiento de Fechas e Indicadores"
+      ],
+      "metadata": {
+        "id": "MRMd8EI70V8v"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from datetime import datetime\n",
+        "import pandas as pd\n",
+        "\n",
+        "# =================================================\n",
+        "# CONVERSIÓN DE FECHAS A DATETIME\n",
+        "# =================================================\n",
+        "\n",
+        "homologado[\"FECHA_EXCEPCION_DT\"] = pd.to_datetime(\n",
+        "    homologado[\"FECHA_EXCEPCION\"],\n",
+        "    errors=\"coerce\"\n",
+        ")\n",
+        "\n",
+        "# =================================================\n",
+        "# FECHA CORTA (DD/MM/AAAA) SOLO PARA VISUALIZAR\n",
+        "# =================================================\n",
+        "\n",
+        "homologado[\"FECHA_EXCEPCION_CORTA\"] = homologado[\"FECHA_EXCEPCION_DT\"].dt.strftime(\"%d/%m/%Y\")\n",
+        "\n",
+        "# =================================================\n",
+        "# CÁLCULO CORRECTO: HOY - FECHA_EXCEPCION\n",
+        "# =================================================\n",
+        "\n",
+        "fecha_hoy = pd.Timestamp(datetime.now().date())\n",
+        "\n",
+        "homologado[\"FECHA_EXCEPCION_DATE\"] = homologado[\"FECHA_EXCEPCION_DT\"].dt.floor(\"D\")\n",
+        "\n",
+        "homologado[\"DIAS_DESDE_CARGA\"] = (\n",
+        "    fecha_hoy - homologado[\"FECHA_EXCEPCION_DATE\"]\n",
+        ").dt.days"
+      ],
+      "metadata": {
+        "id": "758ZtZBP0Xgu"
+      },
+      "execution_count": 38,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "VALIDACIÓN RÁPIDA (RECOMENDADA)"
+      ],
+      "metadata": {
+        "id": "rNDKoE7_6zZp"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "homologado[\n",
+        "    [\"FECHA_EXCEPCION\", \"FECHA_EXCEPCION_CORTA\", \"DIAS_DESDE_CARGA\"]\n",
+        "].head(3)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 216
+        },
+        "id": "Ws-UTQYo61nJ",
+        "outputId": "2f8c4c80-a441-410b-829c-6884aa980bfb"
+      },
+      "execution_count": 39,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "       FECHA_EXCEPCION FECHA_EXCEPCION_CORTA  DIAS_DESDE_CARGA\n",
+              "0  2026/04/14 19:49:47            14/04/2026                 1\n",
+              "1  2026/04/14 19:59:03            14/04/2026                 1\n",
+              "2  2026/04/14 20:08:05            14/04/2026                 1"
+            ],
+            "text/html": [
+              "\n",
+              "  <div id=\"df-9422fcf8-7953-40dc-bad0-febe5d2b702d\" class=\"colab-df-container\">\n",
+              "    <div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>FECHA_EXCEPCION</th>\n",
+              "      <th>FECHA_EXCEPCION_CORTA</th>\n",
+              "      <th>DIAS_DESDE_CARGA</th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>0</th>\n",
+              "      <td>2026/04/14 19:49:47</td>\n",
+              "      <td>14/04/2026</td>\n",
+              "      <td>1</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>1</th>\n",
+              "      <td>2026/04/14 19:59:03</td>\n",
+              "      <td>14/04/2026</td>\n",
+              "      <td>1</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>2</th>\n",
+              "      <td>2026/04/14 20:08:05</td>\n",
+              "      <td>14/04/2026</td>\n",
+              "      <td>1</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "</div>\n",
+              "    <div class=\"colab-df-buttons\">\n",
+              "\n",
+              "  <div class=\"colab-df-container\">\n",
+              "    <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-9422fcf8-7953-40dc-bad0-febe5d2b702d')\"\n",
+              "            title=\"Convert this dataframe to an interactive table.\"\n",
+              "            style=\"display:none;\">\n",
+              "\n",
+              "  <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\" viewBox=\"0 -960 960 960\">\n",
+              "    <path d=\"M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z\"/>\n",
+              "  </svg>\n",
+              "    </button>\n",
+              "\n",
+              "  <style>\n",
+              "    .colab-df-container {\n",
+              "      display:flex;\n",
+              "      gap: 12px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert {\n",
+              "      background-color: #E8F0FE;\n",
+              "      border: none;\n",
+              "      border-radius: 50%;\n",
+              "      cursor: pointer;\n",
+              "      display: none;\n",
+              "      fill: #1967D2;\n",
+              "      height: 32px;\n",
+              "      padding: 0 0 0 0;\n",
+              "      width: 32px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert:hover {\n",
+              "      background-color: #E2EBFA;\n",
+              "      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);\n",
+              "      fill: #174EA6;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-buttons div {\n",
+              "      margin-bottom: 4px;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert {\n",
+              "      background-color: #3B4455;\n",
+              "      fill: #D2E3FC;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert:hover {\n",
+              "      background-color: #434B5C;\n",
+              "      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);\n",
+              "      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));\n",
+              "      fill: #FFFFFF;\n",
+              "    }\n",
+              "  </style>\n",
+              "\n",
+              "    <script>\n",
+              "      const buttonEl =\n",
+              "        document.querySelector('#df-9422fcf8-7953-40dc-bad0-febe5d2b702d button.colab-df-convert');\n",
+              "      buttonEl.style.display =\n",
+              "        google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
+              "\n",
+              "      async function convertToInteractive(key) {\n",
+              "        const element = document.querySelector('#df-9422fcf8-7953-40dc-bad0-febe5d2b702d');\n",
+              "        const dataTable =\n",
+              "          await google.colab.kernel.invokeFunction('convertToInteractive',\n",
+              "                                                    [key], {});\n",
+              "        if (!dataTable) return;\n",
+              "\n",
+              "        const docLinkHtml = 'Like what you see? Visit the ' +\n",
+              "          '<a target=\"_blank\" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'\n",
+              "          + ' to learn more about interactive tables.';\n",
+              "        element.innerHTML = '';\n",
+              "        dataTable['output_type'] = 'display_data';\n",
+              "        await google.colab.output.renderOutput(dataTable, element);\n",
+              "        const docLink = document.createElement('div');\n",
+              "        docLink.innerHTML = docLinkHtml;\n",
+              "        element.appendChild(docLink);\n",
+              "      }\n",
+              "    </script>\n",
+              "  </div>\n",
+              "\n",
+              "\n",
+              "    </div>\n",
+              "  </div>\n"
+            ],
+            "application/vnd.google.colaboratory.intrinsic+json": {
+              "type": "dataframe",
+              "summary": "{\n  \"name\": \"]\",\n  \"rows\": 3,\n  \"fields\": [\n    {\n      \"column\": \"FECHA_EXCEPCION\",\n      \"properties\": {\n        \"dtype\": \"object\",\n        \"num_unique_values\": 3,\n        \"samples\": [\n          \"2026/04/14 19:49:47\",\n          \"2026/04/14 19:59:03\",\n          \"2026/04/14 20:08:05\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"FECHA_EXCEPCION_CORTA\",\n      \"properties\": {\n        \"dtype\": \"object\",\n        \"num_unique_values\": 1,\n        \"samples\": [\n          \"14/04/2026\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"DIAS_DESDE_CARGA\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 0,\n        \"min\": 1,\n        \"max\": 1,\n        \"num_unique_values\": 1,\n        \"samples\": [\n          1\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}"
+            }
+          },
+          "metadata": {},
+          "execution_count": 39
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Guardar el archivo HOMOLOGADO"
+      ],
+      "metadata": {
+        "id": "DnVKOehb0qE-"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "fecha = datetime.now().strftime(\"%Y%m%d\")\n",
+        "ruta_salida = f\"/content/HOMOLOGADO_{fecha}.xlsx\"\n",
+        "\n",
+        "homologado.to_excel(ruta_salida, index=False)\n",
+        "ruta_salida"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 35
+        },
+        "id": "wxQK0yP10qm4",
+        "outputId": "3e463706-2063-4d55-d426-1be7c84a8abc"
+      },
+      "execution_count": 8,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "'/content/HOMOLOGADO_20260415.xlsx'"
+            ],
+            "application/vnd.google.colaboratory.intrinsic+json": {
+              "type": "string"
+            }
+          },
+          "metadata": {},
+          "execution_count": 8
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Cargar el HOMOLOGADO (modo producción)"
+      ],
+      "metadata": {
+        "id": "8cpr0rBh0yWm"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import glob\n",
+        "import pandas as pd\n",
+        "import os\n",
+        "\n",
+        "archivos = glob.glob(\"/content/HOMOLOGADO_*.xlsx\")\n",
+        "\n",
+        "ruta_homologado = max(archivos, key=os.path.getctime)\n",
+        "print(\"Usando:\", ruta_homologado)\n",
+        "\n",
+        "homologado = pd.read_excel(ruta_homologado)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "C2n38bqT0y9f",
+        "outputId": "8d4d58c1-9209-4f6f-cdb4-7e9c27f764d6"
+      },
+      "execution_count": 51,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Usando: /content/HOMOLOGADO_20260415.xlsx\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Dashboard (3 gráficos)"
+      ],
+      "metadata": {
+        "id": "8AgmXsiG03H-"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import glob\n",
+        "import os\n",
+        "import pandas as pd\n",
+        "import dash\n",
+        "from dash import dcc, html, Input, Output\n",
+        "import plotly.express as px\n",
+        "import numpy as np\n",
+        "from datetime import datetime\n",
+        "\n",
+        "# ====================================\n",
+        "# RUTA REAL (LA DEL SCRIPT / NOTEBOOK)\n",
+        "# ====================================\n",
+        "BASE = os.getcwd()\n",
+        "print(\"✅ Buscando HOMOLOGADO en:\", BASE)\n",
+        "\n",
+        "archivos = glob.glob(os.path.join(BASE, \"HOMOLOGADO*.xlsx\"))\n",
+        "print(\"📄 Archivos encontrados:\", archivos)\n",
+        "\n",
+        "if not archivos:\n",
+        "    raise FileNotFoundError(\n",
+        "        f\"No se encontró ningún archivo HOMOLOGADO en {BASE}\"\n",
+        "    )\n",
+        "\n",
+        "archivo = archivos[0]  # Solo hay uno\n",
+        "homologado = pd.read_excel(archivo)\n",
+        "\n",
+        "print(\"✅ Cargado:\", archivo)\n",
+        "\n",
+        "# =================================================\n",
+        "# CONVERSIÓN DE FECHAS A DATETIME (Re-applying from 758ZtZBP0Xgu)\n",
+        "# =================================================\n",
+        "homologado[\"FECHA_EXCEPCION_DT\"] = pd.to_datetime(\n",
+        "    homologado[\"FECHA_EXCEPCION\"],\n",
+        "    errors=\"coerce\"\n",
+        ")\n",
+        "homologado[\"FECHA_EXCEPCION_CORTA\"] = homologado[\"FECHA_EXCEPCION_DT\"].dt.strftime(\"%d/%m/%Y\")\n",
+        "fecha_hoy = pd.Timestamp(datetime.now().date())\n",
+        "homologado[\"FECHA_EXCEPCION_DATE\"] = homologado[\"FECHA_EXCEPCION_DT\"].dt.floor(\"D\")\n",
+        "homologado[\"DIAS_DESDE_CARGA\"] = (\n",
+        "    fecha_hoy - homologado[\"FECHA_EXCEPCION_DATE\"]\n",
+        ").dt.days\n",
+        "\n",
+        "# ============================================\n",
+        "# SEMÁFORO SEGÚN DÍAS DESDE EXCEPCIÓN (Re-applying from fP_yV76F7xpc)\n",
+        "# ============================================\n",
+        "conditions = [\n",
+        "    homologado[\"DIAS_DESDE_CARGA\"] <= 1,\n",
+        "    homologado[\"DIAS_DESDE_CARGA\"].between(2, 3),\n",
+        "    homologado[\"DIAS_DESDE_CARGA\"] >= 4\n",
+        "]\n",
+        "choices = [\"VERDE\", \"AMARILLO\", \"ROJO\"]\n",
+        "homologado[\"SEMÁFORO\"] = np.select(conditions, choices, default=\"SIN_FECHA\")\n",
+        "\n",
+        "# =============================\n",
+        "# APP DASH\n",
+        "# =============================\n",
+        "app = dash.Dash(__name__)\n",
+        "\n",
+        "app.layout = html.Div([\n",
+        "    html.H2(\"Dashboard Pedidos – Homologado\"), # Updated title\n",
+        "\n",
+        "    # Existing components for SEMÁFORO\n",
+        "    dcc.Dropdown(\n",
+        "        options=homologado[\"SEMÁFORO\"].dropna().unique(),\n",
+        "        multi=True,\n",
+        "        id=\"f_semaforo\",\n",
+        "        placeholder=\"Semáforo\"\n",
+        "    ),\n",
+        "    dcc.Graph(id=\"g_semaforo\"),\n",
+        "\n",
+        "    # New components for ORIGEN, RELANZAR, TRANSACCION, FECHA_EXCEPCION_CORTA\n",
+        "    dcc.Dropdown(homologado[\"ORIGEN\"].unique(), multi=True, id=\"f_origen\", placeholder=\"Origen\"),\n",
+        "    dcc.Dropdown([\"SI\", \"NO\"], multi=True, id=\"f_relanzar\", placeholder=\"Relanzar\"),\n",
+        "\n",
+        "    dcc.Graph(id=\"g_tx\"),\n",
+        "    dcc.Graph(id=\"g_fecha\"),\n",
+        "    dcc.Graph(id=\"g_origen\"),\n",
+        "])\n",
+        "\n",
+        "# Callback for SEMÁFORO graph (renamed)\n",
+        "@app.callback(\n",
+        "    Output(\"g_semaforo\", \"figure\"),\n",
+        "    Input(\"f_semaforo\", \"value\")\n",
+        ")\n",
+        "def update_semaforo_graph(semaforo):\n",
+        "    df = homologado.copy()\n",
+        "    if semaforo:\n",
+        "        df = df[df[\"SEMÁFORO\"].isin(semaforo)]\n",
+        "\n",
+        "    f = df.groupby(\"SEMÁFORO\").size().reset_index(name=\"CANTIDAD\")\n",
+        "\n",
+        "    fig = px.bar(\n",
+        "        f,\n",
+        "        x=\"SEMÁFORO\",\n",
+        "        y=\"CANTIDAD\",\n",
+        "        color=\"SEMÁFORO\",\n",
+        "        color_discrete_map={\n",
+        "            \"VERDE\": \"green\",\n",
+        "            \"AMARILLO\": \"orange\",\n",
+        "            \"ROJO\": \"red\"\n",
+        "        },\n",
+        "        title=\"Pedidos por Semáforo\"\n",
+        "    )\n",
+        "    return fig\n",
+        "\n",
+        "# New callback for additional graphs\n",
+        "@app.callback(\n",
+        "    Output(\"g_tx\",\"figure\"),\n",
+        "    Output(\"g_fecha\",\"figure\"),\n",
+        "    Output(\"g_origen\",\"figure\"),\n",
+        "    Input(\"f_origen\",\"value\"),\n",
+        "    Input(\"f_relanzar\",\"value\"),\n",
+        ")\n",
+        "def update_additional_graphs(o, r):\n",
+        "    df = homologado.copy()\n",
+        "    if o: df = df[df[\"ORIGEN\"].isin(o)]\n",
+        "    if r: df = df[df[\"RELANZAR\"].isin(r)]\n",
+        "\n",
+        "    f1 = df.groupby(\"TRANSACCION\").size().reset_index(name=\"CANTIDAD\")\n",
+        "    f2 = df.groupby(\"FECHA_EXCEPCION_CORTA\").size().reset_index(name=\"CANTIDAD\")\n",
+        "    f3 = df.groupby(\"ORIGEN\").size().reset_index(name=\"CANTIDAD\")\n",
+        "\n",
+        "    return (\n",
+        "        px.bar(f1, x=\"TRANSACCION\", y=\"CANTIDAD\", title=\"Pedidos por Transacción\"), # Added title\n",
+        "        px.bar(f2, x=\"FECHA_EXCEPCION_CORTA\", y=\"CANTIDAD\", title=\"Pedidos por Fecha de Excepción\"), # Added title\n",
+        "        px.bar(f3, x=\"ORIGEN\", y=\"CANTIDAD\", title=\"Pedidos por Origen\") # Added title\n",
+        "    )\n",
+        "if __name__ == \"__main__\":\n",
+        "    app.run(debug=True, port=8050)\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 743
+        },
+        "id": "pfCaiHLn03wd",
+        "outputId": "03e64de6-1d00-40b9-8e3c-908b5e9773c2"
+      },
+      "execution_count": 70,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "✅ Buscando HOMOLOGADO en: /content\n",
+            "📄 Archivos encontrados: ['/content/HOMOLOGADO_20260415.xlsx']\n",
+            "✅ Cargado: /content/HOMOLOGADO_20260415.xlsx\n"
+          ]
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "<IPython.core.display.Javascript object>"
+            ],
+            "application/javascript": [
+              "(async (port, path, width, height, cache, element) => {\n",
+              "    if (!google.colab.kernel.accessAllowed && !cache) {\n",
+              "      return;\n",
+              "    }\n",
+              "    element.appendChild(document.createTextNode(''));\n",
+              "    const url = await google.colab.kernel.proxyPort(port, {cache});\n",
+              "    const iframe = document.createElement('iframe');\n",
+              "    iframe.src = new URL(path, url).toString();\n",
+              "    iframe.height = height;\n",
+              "    iframe.width = width;\n",
+              "    iframe.style.border = 0;\n",
+              "    iframe.allow = [\n",
+              "        'accelerometer',\n",
+              "        'autoplay',\n",
+              "        'camera',\n",
+              "        'clipboard-read',\n",
+              "        'clipboard-write',\n",
+              "        'gyroscope',\n",
+              "        'magnetometer',\n",
+              "        'microphone',\n",
+              "        'serial',\n",
+              "        'usb',\n",
+              "        'xr-spatial-tracking',\n",
+              "    ].join('; ');\n",
+              "    element.appendChild(iframe);\n",
+              "  })(8050, \"/\", \"100%\", 650, false, window.element)"
+            ]
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Ejecutar"
+      ],
+      "metadata": {
+        "id": "pDemhh5c08cO"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "\n",
+        "if __name__ == \"__main__\":\n",
+        "    app.run(debug=True, port=8050)\n",
+        "\n",
+        "\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 671
+        },
+        "id": "-fB07pQx0-Zm",
+        "outputId": "a36f83b1-00cf-4dea-d1e8-b41ba63ece76"
+      },
+      "execution_count": 69,
+      "outputs": [
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "<IPython.core.display.Javascript object>"
+            ],
+            "application/javascript": [
+              "(async (port, path, width, height, cache, element) => {\n",
+              "    if (!google.colab.kernel.accessAllowed && !cache) {\n",
+              "      return;\n",
+              "    }\n",
+              "    element.appendChild(document.createTextNode(''));\n",
+              "    const url = await google.colab.kernel.proxyPort(port, {cache});\n",
+              "    const iframe = document.createElement('iframe');\n",
+              "    iframe.src = new URL(path, url).toString();\n",
+              "    iframe.height = height;\n",
+              "    iframe.width = width;\n",
+              "    iframe.style.border = 0;\n",
+              "    iframe.allow = [\n",
+              "        'accelerometer',\n",
+              "        'autoplay',\n",
+              "        'camera',\n",
+              "        'clipboard-read',\n",
+              "        'clipboard-write',\n",
+              "        'gyroscope',\n",
+              "        'magnetometer',\n",
+              "        'microphone',\n",
+              "        'serial',\n",
+              "        'usb',\n",
+              "        'xr-spatial-tracking',\n",
+              "    ].join('; ');\n",
+              "    element.appendChild(iframe);\n",
+              "  })(8050, \"/\", \"100%\", 650, false, window.element)"
+            ]
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Cargar el HOMOLOGADO (una vez reiniciado)"
+      ],
+      "metadata": {
+        "id": "objMyGrP3PEw"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "\n",
+        "import glob\n",
+        "import os\n",
+        "import pandas as pd\n",
+        "\n",
+        "archivos = glob.glob(\"/content/HOMOLOGADO_*.xlsx\")\n",
+        "ruta = max(archivos, key=os.path.getctime)\n",
+        "\n",
+        "homologado = pd.read_excel(ruta)\n",
+        "\n",
+        "print(\"✅ HOMOLOGADO cargado\")\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "4ieJY_W73LlK",
+        "outputId": "9b41e7cf-9ccc-46cb-bf7a-3729116033ee"
+      },
+      "execution_count": 47,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "✅ HOMOLOGADO cargado\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "CÓDIGO PARA CREAR LA COLUMNA SEMÁFORO"
+      ],
+      "metadata": {
+        "id": "njwb24Zi7xOq"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import numpy as np\n",
+        "\n",
+        "# ============================================\n",
+        "# SEMÁFORO SEGÚN DÍAS DESDE EXCEPCIÓN\n",
+        "# ============================================\n",
+        "\n",
+        "conditions = [\n",
+        "    homologado[\"DIAS_DESDE_CARGA\"] <= 1,\n",
+        "    homologado[\"DIAS_DESDE_CARGA\"].between(2, 3),\n",
+        "    homologado[\"DIAS_DESDE_CARGA\"] >= 4\n",
+        "]\n",
+        "\n",
+        "choices = [\"VERDE\", \"AMARILLO\", \"ROJO\"]\n",
+        "\n",
+        "homologado[\"SEMÁFORO\"] = np.select(conditions, choices, default=\"SIN_FECHA\")"
+      ],
+      "metadata": {
+        "id": "fP_yV76F7xpc"
+      },
+      "execution_count": 53,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Gráfico por SEMÁFORO"
+      ],
+      "metadata": {
+        "id": "o6KVsMu0760N"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import plotly.express as px\n",
+        "\n",
+        "f_sem = (\n",
+        "    homologado.groupby(\"SEMÁFORO\")\n",
+        "    .size()\n",
+        "    .reset_index(name=\"CANTIDAD\")\n",
+        ")\n",
+        "\n",
+        "fig = px.bar(\n",
+        "    f_sem,\n",
+        "    x=\"SEMÁFORO\",\n",
+        "    y=\"CANTIDAD\",\n",
+        "    color=\"SEMÁFORO\",\n",
+        "    color_discrete_map={\n",
+        "        \"VERDE\": \"green\",\n",
+        "        \"AMARILLO\": \"orange\",\n",
+        "        \"ROJO\": \"red\",\n",
+        "        \"SIN_FECHA\": \"gray\"\n",
+        "    },\n",
+        "    title=\"Pedidos por Semáforo\"\n",
+        ")\n",
+        "\n",
+        "fig.show()"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 542
+        },
+        "id": "bFXB4ZY978Dq",
+        "outputId": "0ce8f124-0321-4ed6-a90f-73165e88f2ae"
+      },
+      "execution_count": 54,
+      "outputs": [
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/html": [
+              "<html>\n",
+              "<head><meta charset=\"utf-8\" /></head>\n",
+              "<body>\n",
+              "    <div>            <script src=\"https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG\"></script><script type=\"text/javascript\">if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: \"STIX-Web\"}});}</script>                <script type=\"text/javascript\">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>\n",
+              "        <script charset=\"utf-8\" src=\"https://cdn.plot.ly/plotly-2.35.2.min.js\"></script>                <div id=\"86b50a9c-4716-4797-a542-c57567888599\" class=\"plotly-graph-div\" style=\"height:525px; width:100%;\"></div>            <script type=\"text/javascript\">                                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById(\"86b50a9c-4716-4797-a542-c57567888599\")) {                    Plotly.newPlot(                        \"86b50a9c-4716-4797-a542-c57567888599\",                        [{\"alignmentgroup\":\"True\",\"hovertemplate\":\"SEMÁFORO=%{x}\\u003cbr\\u003eCANTIDAD=%{y}\\u003cextra\\u003e\\u003c\\u002fextra\\u003e\",\"legendgroup\":\"AMARILLO\",\"marker\":{\"color\":\"orange\",\"pattern\":{\"shape\":\"\"}},\"name\":\"AMARILLO\",\"offsetgroup\":\"AMARILLO\",\"orientation\":\"v\",\"showlegend\":true,\"textposition\":\"auto\",\"x\":[\"AMARILLO\"],\"xaxis\":\"x\",\"y\":[3],\"yaxis\":\"y\",\"type\":\"bar\"},{\"alignmentgroup\":\"True\",\"hovertemplate\":\"SEMÁFORO=%{x}\\u003cbr\\u003eCANTIDAD=%{y}\\u003cextra\\u003e\\u003c\\u002fextra\\u003e\",\"legendgroup\":\"ROJO\",\"marker\":{\"color\":\"red\",\"pattern\":{\"shape\":\"\"}},\"name\":\"ROJO\",\"offsetgroup\":\"ROJO\",\"orientation\":\"v\",\"showlegend\":true,\"textposition\":\"auto\",\"x\":[\"ROJO\"],\"xaxis\":\"x\",\"y\":[11],\"yaxis\":\"y\",\"type\":\"bar\"},{\"alignmentgroup\":\"True\",\"hovertemplate\":\"SEMÁFORO=%{x}\\u003cbr\\u003eCANTIDAD=%{y}\\u003cextra\\u003e\\u003c\\u002fextra\\u003e\",\"legendgroup\":\"VERDE\",\"marker\":{\"color\":\"green\",\"pattern\":{\"shape\":\"\"}},\"name\":\"VERDE\",\"offsetgroup\":\"VERDE\",\"orientation\":\"v\",\"showlegend\":true,\"textposition\":\"auto\",\"x\":[\"VERDE\"],\"xaxis\":\"x\",\"y\":[521],\"yaxis\":\"y\",\"type\":\"bar\"}],                        {\"template\":{\"data\":{\"histogram2dcontour\":[{\"type\":\"histogram2dcontour\",\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"},\"colorscale\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]]}],\"choropleth\":[{\"type\":\"choropleth\",\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}],\"histogram2d\":[{\"type\":\"histogram2d\",\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"},\"colorscale\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]]}],\"heatmap\":[{\"type\":\"heatmap\",\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"},\"colorscale\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]]}],\"heatmapgl\":[{\"type\":\"heatmapgl\",\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"},\"colorscale\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]]}],\"contourcarpet\":[{\"type\":\"contourcarpet\",\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}],\"contour\":[{\"type\":\"contour\",\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"},\"colorscale\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]]}],\"surface\":[{\"type\":\"surface\",\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"},\"colorscale\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]]}],\"mesh3d\":[{\"type\":\"mesh3d\",\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}],\"scatter\":[{\"fillpattern\":{\"fillmode\":\"overlay\",\"size\":10,\"solidity\":0.2},\"type\":\"scatter\"}],\"parcoords\":[{\"type\":\"parcoords\",\"line\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}}],\"scatterpolargl\":[{\"type\":\"scatterpolargl\",\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}}],\"bar\":[{\"error_x\":{\"color\":\"#2a3f5f\"},\"error_y\":{\"color\":\"#2a3f5f\"},\"marker\":{\"line\":{\"color\":\"#E5ECF6\",\"width\":0.5},\"pattern\":{\"fillmode\":\"overlay\",\"size\":10,\"solidity\":0.2}},\"type\":\"bar\"}],\"scattergeo\":[{\"type\":\"scattergeo\",\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}}],\"scatterpolar\":[{\"type\":\"scatterpolar\",\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}}],\"histogram\":[{\"marker\":{\"pattern\":{\"fillmode\":\"overlay\",\"size\":10,\"solidity\":0.2}},\"type\":\"histogram\"}],\"scattergl\":[{\"type\":\"scattergl\",\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}}],\"scatter3d\":[{\"type\":\"scatter3d\",\"line\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}},\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}}],\"scattermapbox\":[{\"type\":\"scattermapbox\",\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}}],\"scatterternary\":[{\"type\":\"scatterternary\",\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}}],\"scattercarpet\":[{\"type\":\"scattercarpet\",\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}}],\"carpet\":[{\"aaxis\":{\"endlinecolor\":\"#2a3f5f\",\"gridcolor\":\"white\",\"linecolor\":\"white\",\"minorgridcolor\":\"white\",\"startlinecolor\":\"#2a3f5f\"},\"baxis\":{\"endlinecolor\":\"#2a3f5f\",\"gridcolor\":\"white\",\"linecolor\":\"white\",\"minorgridcolor\":\"white\",\"startlinecolor\":\"#2a3f5f\"},\"type\":\"carpet\"}],\"table\":[{\"cells\":{\"fill\":{\"color\":\"#EBF0F8\"},\"line\":{\"color\":\"white\"}},\"header\":{\"fill\":{\"color\":\"#C8D4E3\"},\"line\":{\"color\":\"white\"}},\"type\":\"table\"}],\"barpolar\":[{\"marker\":{\"line\":{\"color\":\"#E5ECF6\",\"width\":0.5},\"pattern\":{\"fillmode\":\"overlay\",\"size\":10,\"solidity\":0.2}},\"type\":\"barpolar\"}],\"pie\":[{\"automargin\":true,\"type\":\"pie\"}]},\"layout\":{\"autotypenumbers\":\"strict\",\"colorway\":[\"#636efa\",\"#EF553B\",\"#00cc96\",\"#ab63fa\",\"#FFA15A\",\"#19d3f3\",\"#FF6692\",\"#B6E880\",\"#FF97FF\",\"#FECB52\"],\"font\":{\"color\":\"#2a3f5f\"},\"hovermode\":\"closest\",\"hoverlabel\":{\"align\":\"left\"},\"paper_bgcolor\":\"white\",\"plot_bgcolor\":\"#E5ECF6\",\"polar\":{\"bgcolor\":\"#E5ECF6\",\"angularaxis\":{\"gridcolor\":\"white\",\"linecolor\":\"white\",\"ticks\":\"\"},\"radialaxis\":{\"gridcolor\":\"white\",\"linecolor\":\"white\",\"ticks\":\"\"}},\"ternary\":{\"bgcolor\":\"#E5ECF6\",\"aaxis\":{\"gridcolor\":\"white\",\"linecolor\":\"white\",\"ticks\":\"\"},\"baxis\":{\"gridcolor\":\"white\",\"linecolor\":\"white\",\"ticks\":\"\"},\"caxis\":{\"gridcolor\":\"white\",\"linecolor\":\"white\",\"ticks\":\"\"}},\"coloraxis\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}},\"colorscale\":{\"sequential\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]],\"sequentialminus\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]],\"diverging\":[[0,\"#8e0152\"],[0.1,\"#c51b7d\"],[0.2,\"#de77ae\"],[0.3,\"#f1b6da\"],[0.4,\"#fde0ef\"],[0.5,\"#f7f7f7\"],[0.6,\"#e6f5d0\"],[0.7,\"#b8e186\"],[0.8,\"#7fbc41\"],[0.9,\"#4d9221\"],[1,\"#276419\"]]},\"xaxis\":{\"gridcolor\":\"white\",\"linecolor\":\"white\",\"ticks\":\"\",\"title\":{\"standoff\":15},\"zerolinecolor\":\"white\",\"automargin\":true,\"zerolinewidth\":2},\"yaxis\":{\"gridcolor\":\"white\",\"linecolor\":\"white\",\"ticks\":\"\",\"title\":{\"standoff\":15},\"zerolinecolor\":\"white\",\"automargin\":true,\"zerolinewidth\":2},\"scene\":{\"xaxis\":{\"backgroundcolor\":\"#E5ECF6\",\"gridcolor\":\"white\",\"linecolor\":\"white\",\"showbackground\":true,\"ticks\":\"\",\"zerolinecolor\":\"white\",\"gridwidth\":2},\"yaxis\":{\"backgroundcolor\":\"#E5ECF6\",\"gridcolor\":\"white\",\"linecolor\":\"white\",\"showbackground\":true,\"ticks\":\"\",\"zerolinecolor\":\"white\",\"gridwidth\":2},\"zaxis\":{\"backgroundcolor\":\"#E5ECF6\",\"gridcolor\":\"white\",\"linecolor\":\"white\",\"showbackground\":true,\"ticks\":\"\",\"zerolinecolor\":\"white\",\"gridwidth\":2}},\"shapedefaults\":{\"line\":{\"color\":\"#2a3f5f\"}},\"annotationdefaults\":{\"arrowcolor\":\"#2a3f5f\",\"arrowhead\":0,\"arrowwidth\":1},\"geo\":{\"bgcolor\":\"white\",\"landcolor\":\"#E5ECF6\",\"subunitcolor\":\"white\",\"showland\":true,\"showlakes\":true,\"lakecolor\":\"white\"},\"title\":{\"x\":0.05},\"mapbox\":{\"style\":\"light\"}}},\"xaxis\":{\"anchor\":\"y\",\"domain\":[0.0,1.0],\"title\":{\"text\":\"SEMÁFORO\"},\"categoryorder\":\"array\",\"categoryarray\":[\"AMARILLO\",\"ROJO\",\"VERDE\"]},\"yaxis\":{\"anchor\":\"x\",\"domain\":[0.0,1.0],\"title\":{\"text\":\"CANTIDAD\"}},\"legend\":{\"title\":{\"text\":\"SEMÁFORO\"},\"tracegroupgap\":0},\"title\":{\"text\":\"Pedidos por Semáforo\"},\"barmode\":\"relative\"},                        {\"responsive\": true}                    ).then(function(){\n",
+              "                            \n",
+              "var gd = document.getElementById('86b50a9c-4716-4797-a542-c57567888599');\n",
+              "var x = new MutationObserver(function (mutations, observer) {{\n",
+              "        var display = window.getComputedStyle(gd).display;\n",
+              "        if (!display || display === 'none') {{\n",
+              "            console.log([gd, 'removed!']);\n",
+              "            Plotly.purge(gd);\n",
+              "            observer.disconnect();\n",
+              "        }}\n",
+              "}});\n",
+              "\n",
+              "// Listen for the removal of the full notebook cells\n",
+              "var notebookContainer = gd.closest('#notebook-container');\n",
+              "if (notebookContainer) {{\n",
+              "    x.observe(notebookContainer, {childList: true});\n",
+              "}}\n",
+              "\n",
+              "// Listen for the clearing of the current output cell\n",
+              "var outputEl = gd.closest('.output');\n",
+              "if (outputEl) {{\n",
+              "    x.observe(outputEl, {childList: true});\n",
+              "}}\n",
+              "\n",
+              "                        })                };                            </script>        </div>\n",
+              "</body>\n",
+              "</html>"
+            ]
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "VALIDAR SEMAFORO"
+      ],
+      "metadata": {
+        "id": "PjdScsfS8oEJ"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "homologado[\"SEMÁFORO\"].value_counts()"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 210
+        },
+        "id": "STlb6FXN8mHa",
+        "outputId": "d9f695e4-f86b-4d7c-b7a8-06173cd4643d"
+      },
+      "execution_count": 55,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "SEMÁFORO\n",
+              "VERDE       521\n",
+              "ROJO         11\n",
+              "AMARILLO      3\n",
+              "Name: count, dtype: int64"
+            ],
+            "text/html": [
+              "<div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>count</th>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>SEMÁFORO</th>\n",
+              "      <th></th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>VERDE</th>\n",
+              "      <td>521</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>ROJO</th>\n",
+              "      <td>11</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>AMARILLO</th>\n",
+              "      <td>3</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "</div><br><label><b>dtype:</b> int64</label>"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 55
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Archivo: export_semaforo.py"
+      ],
+      "metadata": {
+        "id": "f8QlYgHl9JKz"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "import glob, os\n",
+        "from datetime import datetime\n",
+        "import numpy as np\n",
+        "\n",
+        "# Change BASE to a Colab-compatible path\n",
+        "BASE = \"/content/output\"\n",
+        "\n",
+        "# Create the output directory if it doesn't exist\n",
+        "os.makedirs(BASE, exist_ok=True)\n",
+        "\n",
+        "# Cargar último homologado (Search for HOMOLOGADO files in the /content directory)\n",
+        "# Assuming the homologado file is generated in /content, as per previous cells\n",
+        "homologado_files = glob.glob(os.path.join(\"/content\", \"HOMOLOGADO_*.xlsx\"))\n",
+        "\n",
+        "if not homologado_files:\n",
+        "    raise FileNotFoundError(\"No se encontró ningún archivo HOMOLOGADO para cargar.\")\n",
+        "\n",
+        "archivo = max(homologado_files, key=os.path.getctime)\n",
+        "homologado = pd.read_excel(archivo)\n",
+        "\n",
+        "# =================================================\n",
+        "# CONVERSIÓN DE FECHAS A DATETIME (Re-applying from 758ZtZBP0Xgu)\n",
+        "# =================================================\n",
+        "homologado[\"FECHA_EXCEPCION_DT\"] = pd.to_datetime(\n",
+        "    homologado[\"FECHA_EXCEPCION\"],\n",
+        "    errors=\"coerce\"\n",
+        ")\n",
+        "homologado[\"FECHA_EXCEPCION_CORTA\"] = homologado[\"FECHA_EXCEPCION_DT\"].dt.strftime(\"%d/%m/%Y\")\n",
+        "fecha_hoy = pd.Timestamp(datetime.now().date())\n",
+        "homologado[\"FECHA_EXCEPCION_DATE\"] = homologado[\"FECHA_EXCEPCION_DT\"].dt.floor(\"D\")\n",
+        "homologado[\"DIAS_DESDE_CARGA\"] = (\n",
+        "    fecha_hoy - homologado[\"FECHA_EXCEPCION_DATE\"]\n",
+        ").dt.days\n",
+        "\n",
+        "# ============================================\n",
+        "# SEMÁFORO SEGÚN DÍAS DESDE EXCEPCIÓN (Re-applying from fP_yV76F7xpc)\n",
+        "# ============================================\n",
+        "conditions = [\n",
+        "    homologado[\"DIAS_DESDE_CARGA\"] <= 1,\n",
+        "    homologado[\"DIAS_DESDE_CARGA\"].between(2, 3),\n",
+        "    homologado[\"DIAS_DESDE_CARGA\"] >= 4\n",
+        "]\n",
+        "choices = [\"VERDE\", \"AMARILLO\", \"ROJO\"]\n",
+        "homologado[\"SEMÁFORO\"] = np.select(conditions, choices, default=\"SIN_FECHA\")\n",
+        "\n",
+        "# Filtrar ROJO y AMARILLO\n",
+        "criticos = homologado[homologado[\"SEMÁFORO\"].isin([\"ROJO\", \"AMARILLO\"])]\n",
+        "\n",
+        "# Guardar archivo\n",
+        "fecha = datetime.now().strftime(\"%Y%m%d\")\n",
+        "ruta_salida = os.path.join(BASE, f\"SEMAFORO_CRITICO_{fecha}.xlsx\")\n",
+        "\n",
+        "criticos.to_excel(ruta_salida, index=False)\n",
+        "\n",
+        "print(\"✅ Archivo crítico generado:\", ruta_salida)\n",
+        "print(\"Detalle:\")\n",
+        "print(criticos[\"SEMÁFORO\"].value_counts())"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "gaVti94Y9KkL",
+        "outputId": "236470d7-0918-47b5-fbbb-bcd5ee6ffad1"
+      },
+      "execution_count": 72,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "✅ Archivo crítico generado: /content/output/SEMAFORO_CRITICO_20260415.xlsx\n",
+            "Detalle:\n",
+            "SEMÁFORO\n",
+            "ROJO        11\n",
+            "AMARILLO     3\n",
+            "Name: count, dtype: int64\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import os\n",
+        "\n",
+        "print(\"📌 Directorio actual:\")\n",
+        "print(os.getcwd())\n",
+        "\n",
+        "print(\"\\n📂 Archivos que ve Python aquí:\")\n",
+        "for f in os.listdir(os.getcwd()):\n",
+        "    print(\" -\", f)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "0MwsfSuAAc86",
+        "outputId": "dc0c3035-b00b-4332-b221-c9b86cf3e762"
+      },
+      "execution_count": 44,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "📌 Directorio actual:\n",
+            "/content\n",
+            "\n",
+            "📂 Archivos que ve Python aquí:\n",
+            " - .config\n",
+            " - HOMOLOGADO_20260415.xlsx\n",
+            " - SUSPECORE.xlsx\n",
+            " - ACTIVADOR.xlsx\n",
+            " - sample_data\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
