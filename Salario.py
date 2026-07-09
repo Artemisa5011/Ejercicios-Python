@@ -11,14 +11,19 @@
 #total de ingresos por horas extras, descuentos y total a pagar. 
 #(Para calcular el día se debe dividir el salario básico en 30 y el valor de una hora es igual al día dividió en 8 horas diarias).
 
-print("Bienvenido ALUCARD COMPANY.\n")
-nombre = input("Ingrese nombre del trabajador:\n ").lower()
+print("\n" + "=" * 55)
+print("                      ALUCARD COMPANY")
+print("                      COLILLA DE PAGO")
+print("=" * 55)
+nombre = input("Ingrese nombre del trabajador: ").upper()
+identificacion = input("Ingrese número de identificación: ")
+cargo = input("Ingrese cargo del trabajador: ").upper()
 SalarioBasico = float(input("Ingrese el salario básico: "))
-dias_faltados = float(input("Ingrese la cantidad de días faltados:\n "))
-horas_ext_diurnas = float(input("Ingrese la cantidad de horas extras diurnas trabajadas:\n "))
-horas_ext_nocturnas = float(input("Ingrese la cantidad de horas extras nocturnas trabajadas:\n "))
-horas_ext_festivas = float(input("Ingrese la cantidad de horas extras festivas trabajadas:\n "))
-horas_ext_dominicales = float(input("Ingrese la cantidad de horas extras dominicales trabajadas:\n "))  
+dias_faltados = int(input("Ingrese la cantidad de días faltados: "))
+horas_ext_diurnas = float(input("Ingrese la cantidad de horas extras diurnas trabajadas: "))
+horas_ext_nocturnas = float(input("Ingrese la cantidad de horas extras nocturnas trabajadas: "))
+horas_ext_festivas = float(input("Ingrese la cantidad de horas extras festivas trabajadas: "))
+horas_ext_dominicales = float(input("Ingrese la cantidad de horas extras dominicales trabajadas: "))  
 hrasExtrasDiurna =0.25
 hrasExtrasNocturna =0.35
 hrasExtrasFestiva =0.75
@@ -27,7 +32,7 @@ descuentoSalud = 0.04
 descuentoPension = 0.04
 
 #Cálculos base
-valor_dia = SalarioBasico / 30
+valor_dia = SalarioBasico /30
 valor_hora_normal = valor_dia / 8
 
 # Descuento por días faltados
@@ -40,14 +45,15 @@ valor_hora_festiva = valor_hora_normal * (1 + hrasExtrasFestiva)
 valor_hora_dominical = valor_hora_normal * (1 + hrasExtrasDominical)
 
 # Total por horas extras
-total_horas_extras = (
-    (horas_ext_diurnas * valor_hora_diurna) +
-    (horas_ext_nocturnas * valor_hora_nocturna) +
-    (horas_ext_festivas * valor_hora_festiva) +
-    (horas_ext_dominicales * valor_hora_dominical)
-)
+pago_diurnas = horas_ext_diurnas * valor_hora_diurna
+pago_nocturnas = horas_ext_nocturnas * valor_hora_nocturna
+pago_festivas = horas_ext_festivas * valor_hora_festiva
+pago_dominicales = horas_ext_dominicales * valor_hora_dominical
+total_horas_extras = pago_diurnas + pago_nocturnas + pago_festivas + pago_dominicales
+
 #subtotal
 subtotal = SalarioBasico - descuento_dias_faltados + total_horas_extras
+
 
 #Descuentos de salud y pensión
 descuento_salud = subtotal * descuentoSalud
@@ -58,14 +64,42 @@ total_a_pagar = subtotal - descuento_salud - descuento_pension
 
 
 # Mostrar resultados
-print("\n" + "=" * 30)
-print("\n--- PAGO NOMINA ---")
-print(f"Nombre del trabajador: {nombre}")
-print(f"Salario básico: ${SalarioBasico:,.0f}")
-print(f"Descuento por días faltados: ${descuento_dias_faltados:,.0f}")
-print(f"Total horas extras: ${total_horas_extras:,.0f}")
-print(f"Descuento salud (4%): ${descuento_salud:,.0f}")
-print(f"Descuento pensión (4%): ${descuento_pension:,.0f}")
-print(f"Total a pagar: ${total_a_pagar:,.0f}")
-print("\nALUCARD COMPANY le agradece por su trabajo y dedicación.")
-print("\n" + "=" * 30)
+print("=" * 55)
+print("                 PAGO DE NÓMINA")
+print("=" * 55)
+print(f"{'DATOS DEL TRABAJADOR':^55}")
+print("=" * 55)
+print(f"{'Nombre:':20} {nombre}")
+print(f"{'Identificación:':20} {identificacion}")
+print(f"{'Cargo:':20} {cargo}")
+
+print("\n" + "-" * 55)
+print(f"{'CONCEPTOS DE PAGO':^55}")
+print("-" * 55)
+print(f"{'Salario básico':25} ${SalarioBasico:>15,.0f}")
+print(f"{'Valor del día':25} ${valor_dia:>15,.0f}")
+print(f"{'Valor hora normal':25} ${valor_hora_normal:>15,.0f}")
+print(f"{'Días faltados':25} {dias_faltados:>15}")
+print(f"{'Descuento por faltas':25} -${descuento_dias_faltados:>14,.0f}")
+
+print("\n" + "-" * 55)
+print(f"{'DETALLE DE HORAS EXTRAS':^55}")
+print("-" * 55)
+print(f"{'Diurnas':25} ${pago_diurnas:>15,.0f}")
+print(f"{'Nocturnas':25} ${pago_nocturnas:>15,.0f}")
+print(f"{'Festivas':25} ${pago_festivas:>15,.0f}")
+print(f"{'Dominicales':25} ${pago_dominicales:>15,.0f}")
+print(f"{'Total horas extras':24} +${total_horas_extras:>14,.0f}")
+
+print("\n" + "-" * 55)
+print(f"{'LIQUIDACIÓN FINAL':^55}")
+print("-" * 55)
+print(f"{'Subtotal':25} ${subtotal:>15,.0f}")
+print(f"{'Salud (4%)':24} -${descuento_salud:>14,.0f}")
+print(f"{'Pensión (4%)':24} -${descuento_pension:>14,.0f}")
+print("=" * 55)
+print(f"{'TOTAL A PAGAR':24} ${total_a_pagar:>15,.0f}")
+print("=" * 55)
+
+print("\nGracias por su dedicación y compromiso.")
+print("ALUCARD COMPANY le desea un excelente día.")
