@@ -11,6 +11,8 @@
 #total de ingresos por horas extras, descuentos y total a pagar. 
 #(Para calcular el día se debe dividir el salario básico en 30 y el valor de una hora es igual al día dividió en 8 horas diarias).
 
+print("Bienvenido ALUCARD COMPANY.\n")
+nombre = input("Ingrese nombre del trabajador:\n ").lower()
 SalarioBasico = float(input("Ingrese el salario básico: "))
 dias_faltados = float(input("Ingrese la cantidad de días faltados:\n "))
 horas_ext_diurnas = float(input("Ingrese la cantidad de horas extras diurnas trabajadas:\n "))
@@ -56,10 +58,14 @@ total_a_pagar = subtotal - descuento_salud - descuento_pension
 
 
 # Mostrar resultados
-print("\n--- RESULTADOS ---")
+print("\n" + "=" * 30)
+print("\n--- PAGO NOMINA ---")
+print(f"Nombre del trabajador: {nombre}")
 print(f"Salario básico: ${SalarioBasico:,.0f}")
 print(f"Descuento por días faltados: ${descuento_dias_faltados:,.0f}")
 print(f"Total horas extras: ${total_horas_extras:,.0f}")
 print(f"Descuento salud (4%): ${descuento_salud:,.0f}")
 print(f"Descuento pensión (4%): ${descuento_pension:,.0f}")
 print(f"Total a pagar: ${total_a_pagar:,.0f}")
+print("\nALUCARD COMPANY le agradece por su trabajo y dedicación.")
+print("\n" + "=" * 30)
