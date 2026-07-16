@@ -15,6 +15,6 @@ if sexo == "F":
 elif sexo == "M":
     num_pulsaciones = (masc - edad) / pulsa
 else:
-    print("Sexo no válido. Por favor, ingrese 'F' para femenino o 'M' para masculino.")
+    print("Sexo no valido. Por favor, ingrese 'F' para femenino o 'M' para masculino.")
 
-print(f"El número de pulsaciones recomendadas es: {num_pulsaciones}")
+print(f"El numero de pulsaciones recomendadas es: {num_pulsaciones}")
