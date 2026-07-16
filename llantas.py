@@ -4,10 +4,13 @@
 #* Si el cliente compra 5 llantas o más: el precio es de 70 USD por llanta.
 #Solicite la cantidad de llantas que el cliente desea comprar y calcule el total que debe pagar.
 
+mas_llantas=70
+menos_llantas=80
+
 llantas = int(input("Ingrese la cantidad de llantas que desea comprar: "))
 if llantas < 5:
-    precio_por_llanta = 80
+    precio_por_llanta = menos_llantas
 else:
-    precio_por_llanta = 70 
+    precio_por_llanta = mas_llantas
 total_a_pagar = llantas * precio_por_llanta
 print(f"El total a pagar es: {total_a_pagar} USD")
