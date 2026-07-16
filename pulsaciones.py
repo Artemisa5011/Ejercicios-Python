@@ -1,8 +1,8 @@
-#Calcule el número de pulsaciones que debe tener una persona cada 10 segundos de ejercicio aeróbico,
-#según su sexo y edad. Solicite la edad (en años) y el sexo (F = femenino, M = masculino), y aplique:
-#• Sexo femenino: num_pulsaciones = (220 − edad) / 10
-#• Sexo masculino: num_pulsaciones = (210 − edad) / 10
-#Imprima el número de pulsaciones recomendadas.
+#Calcule el numero de pulsaciones que debe tener una persona cada 10 segundos de ejercicio aerobico,
+#segun su sexo y edad. Solicite la edad (en anos) y el sexo (F = femenino, M = masculino), y aplique:
+# Sexo femenino: num_pulsaciones = (220 − edad) / 10
+# Sexo masculino: num_pulsaciones = (210 − edad) / 10
+#Imprima el numero de pulsaciones recomendadas.
 
 edad = int(input("Ingrese su edad (en años): "))
 sexo = input("Ingrese su sexo (F = femenino, M = masculino): ").upper()
